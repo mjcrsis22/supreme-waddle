@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 public class ClienteTest {
+	// TODO: para validar todos los atributos a la vez, se pueden definir matchers
 
 	@Test
 	public void Cliente_SePuedeContruirVacio() {
@@ -46,8 +47,7 @@ public class ClienteTest {
 
 	@Test
 	public void Cliente_SePuedeContruirConListas() {
-		// TODO: los clientes pueden ser titulares y cotitulares de varias cuentas.
-
+		// los clientes pueden ser titulares y cotitulares de varias cuentas.
 		// given
 		Cliente sut;
 		String nombre = "José";

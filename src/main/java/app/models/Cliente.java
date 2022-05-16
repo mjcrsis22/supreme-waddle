@@ -3,14 +3,47 @@ package app.models;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
+// TODO: agregar documentacion con autor
+// TODO: revisar uso de lombok
+@Entity(name = "T_CLIENTE")
 public class Cliente {
+	@Id
+	@GeneratedValue
+	private Long id;
+	@Column(nullable = false, length = 50)
+	@NotEmpty(message = "{common.generic.notEmpty}")
+	@Size(min = 2, max = 50, message = "{common.generic.size}")
 	private String nombre;
+	@Column(nullable = false, length = 50)
+	@NotEmpty(message = "{common.generic.notEmpty}")
+	@Size(min = 2, max = 50, message = "{common.generic.size}")
 	private String apellido;
+	@Embedded
 	private Direccion direccion;
+	@Column(length = 14)
+	@Size(min = 8, max = 14, message = "{common.generic.size}")
 	private String telefono;
+	@Column()
+	@Email(message = "{common.generic.email}")
 	private String email;
 
+	// TODO: se debe definir y documentar en que capa se controlará el enunciado:
+	// "Un cliente titular no debe figurar como cotitular de una misma
+	// CuentaBancaria"
+	@OneToMany(mappedBy = "titular")
 	private Set<CuentaBancaria> cuentasTitular = new HashSet<CuentaBancaria>();
+	@ManyToMany(mappedBy = "cotitulares")
 	private Set<CuentaBancaria> cuentasCotitular = new HashSet<CuentaBancaria>();
 
 	public Cliente() {
@@ -35,6 +68,14 @@ public class Cliente {
 		this.email = email;
 		this.cuentasTitular = cuentasTitular;
 		this.cuentasCotitular = cuentasCotitular;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getNombre() {

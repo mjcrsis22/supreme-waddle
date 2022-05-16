@@ -3,6 +3,9 @@ package app.models;
 import java.time.LocalDate;
 import java.util.Set;
 
+import javax.persistence.Entity;
+
+@Entity(name = "T_CUENTABANCARIA_MONEDANACIONAL")
 public class CuentaBancariaMonedaNacional extends CuentaBancaria {
 
 	public CuentaBancariaMonedaNacional() {

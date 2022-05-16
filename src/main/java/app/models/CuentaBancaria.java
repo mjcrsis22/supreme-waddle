@@ -4,16 +4,54 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.PastOrPresent;
+
+@Entity(name = "T_CUENTABANCARIA")
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class CuentaBancaria {
+	@Id
+	@GeneratedValue
+	private Long id;
+	@Column(nullable = false, updatable = false, unique = true)
+	@NotEmpty(message = "{common.generic.notEmpty}")
 	private Long nroCuenta;
+	@Column(nullable = false, updatable = false)
+	@NotEmpty(message = "{common.generic.notEmpty}")
+	@PastOrPresent(message = "{common.generic.pastOrPresent}")
 	private LocalDate fechaCreacion;
+	@Column(nullable = false, updatable = false)
+	@NotEmpty(message = "{common.generic.notEmpty}")
 	private Double saldoInicial;
+	@Column(nullable = false)
+	@NotEmpty(message = "{common.generic.notEmpty}")
 	private Double saldoActual;
+	@Column(nullable = false)
+	@NotEmpty(message = "{common.generic.notEmpty}")
 	private Double descubiertoAcortado;
+	@Column()
+	@PastOrPresent(message = "{common.generic.pastOrPresent}")
 	private LocalDate fechaCierre;
 
+	@ManyToOne(optional = false)
+	// TODO: ¿como hago "updatable = false" en un @ManyToOne?
+	@NotEmpty(message = "{common.generic.notEmpty}")
 	private Cliente titular;
+	@ManyToMany()
+	@JoinTable(name = "T_CUENTABANCARIA_R_COTITULAR")
 	private Set<Cliente> cotitulares = new HashSet<Cliente>();
+	@OneToMany()
+	@JoinTable(name = "T_CUENTABANCARIA_R_MOVIMIENTO")
 	private Set<Movimiento> movimientosRealizados = new HashSet<Movimiento>();
 
 	public CuentaBancaria() {
@@ -50,6 +88,14 @@ public abstract class CuentaBancaria {
 		}
 
 		this.movimientosRealizados = movimientosRealizados;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Long getNroCuenta() {

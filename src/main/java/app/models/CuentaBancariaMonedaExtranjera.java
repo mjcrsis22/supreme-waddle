@@ -3,7 +3,16 @@ package app.models;
 import java.time.LocalDate;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.validation.constraints.NotEmpty;
+
+@Entity(name = "T_CUENTABANCARIA_MONEDAEXTRANJERA")
 public class CuentaBancariaMonedaExtranjera extends CuentaBancaria {
+	@Column(nullable = false)
+	@Convert(converter = MonedaExtranjeraConverter.class)
+	@NotEmpty(message = "{common.generic.notEmpty}")
 	private MonedaExtranjera monedaAsociada;
 
 	public CuentaBancariaMonedaExtranjera() {

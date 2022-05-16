@@ -1,12 +1,39 @@
 package app.models;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
+@Embeddable
 public class Direccion {
+	@Column(nullable = false, length = 50)
+	@NotEmpty(message = "{common.generic.notEmpty}")
+	@Size(min = 2, max = 50, message = "{common.generic.size}")
 	private String calle;
+	@Column(nullable = false, length = 50)
+	@NotEmpty(message = "{common.generic.notEmpty}")
+	@Size(min = 2, max = 50, message = "{common.generic.size}")
 	private String numeroCivico;
+	@Column(nullable = false, length = 50)
+	@NotEmpty(message = "{common.generic.notEmpty}")
+	@Size(min = 2, max = 50, message = "{common.generic.size}")
 	private String departamento;
+	@Column(nullable = false, length = 50)
+	@NotEmpty(message = "{common.generic.notEmpty}")
+	@Size(min = 2, max = 50, message = "{common.generic.size}")
 	private String piso;
+	@Column(nullable = false, length = 50)
+	@NotEmpty(message = "{common.generic.notEmpty}")
+	@Size(min = 2, max = 50, message = "{common.generic.size}")
 	private String ciudad;
+	@Column(nullable = false, length = 50)
+	@NotEmpty(message = "{common.generic.notEmpty}")
+	@Size(min = 2, max = 50, message = "{common.generic.size}")
 	private String codigoPostal;
+	@Column(nullable = false, length = 50)
+	@NotEmpty(message = "{common.generic.notEmpty}")
+	@Size(min = 2, max = 50, message = "{common.generic.size}")
 	private String Provincia;
 
 	public Direccion() {

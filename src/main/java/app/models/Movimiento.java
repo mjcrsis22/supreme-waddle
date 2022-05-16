@@ -2,9 +2,33 @@ package app.models;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Positive;
+
+@Entity(name = "T_MOVIMIENTO")
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Movimiento {
+	// TODO: Los datos de movimientos son inmutables y son todos obligatorios.
+	@Id
+	@GeneratedValue
+	private Long id;
+	@Column(nullable = false)
+	@NotEmpty(message = "{common.generic.notEmpty}")
+	@PastOrPresent(message = "{common.generic.pastOrPresent}")
 	private LocalDateTime fechaHora;
+	@Column(nullable = false)
+	@NotEmpty(message = "{common.generic.notEmpty}")
+	@Positive(message = "{common.generic.positive}")
 	private Double monto;
+	@Column(nullable = false)
+	@NotEmpty(message = "{common.generic.notEmpty}")
 	private String descripcion;
 
 	public Movimiento() {
@@ -15,6 +39,14 @@ public abstract class Movimiento {
 		this.fechaHora = fechaHora;
 		this.monto = monto;
 		this.descripcion = descripcion;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public LocalDateTime getFechaHora() {

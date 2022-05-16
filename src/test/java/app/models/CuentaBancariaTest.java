@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 public class CuentaBancariaTest {
+	// TODO: para validar todos los atributos a la vez, se pueden definir matchers
 
 	@Test
 	public void CuentaBancaria_SePuedeContruirVacio() {
@@ -54,8 +55,8 @@ public class CuentaBancariaTest {
 
 	@Test
 	public void CuentaBancaria_SePuedeContruirConListas() {
-		// TODO: las cuentas pueden tener 1 titular y cotitulares.
-		// TODO: cada cuenta puede tener varios movimientos.
+		// las cuentas pueden tener 1 titular y cotitulares.
+		// cada cuenta puede tener varios movimientos.
 
 		// given
 		CuentaBancaria sut;

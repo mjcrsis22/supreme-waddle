@@ -2,7 +2,14 @@ package app.models;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotEmpty;
+
+@Entity(name = "T_MOVIMIENTO_TRANSFERENCIA_REALIZADA")
 public class MovimientoTransferenciaRealizada extends Movimiento {
+	@ManyToOne(optional = false)
+	@NotEmpty(message = "{common.generic.notEmpty}")
 	private CuentaBancaria cuentaDestino;
 
 	public MovimientoTransferenciaRealizada() {
