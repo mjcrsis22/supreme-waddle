@@ -34,13 +34,13 @@
 				value="create" />
 			<property
 				name="javax.persistence.schema-generation.scripts.create-target"
-				value="META-INF/create.sql" />
+				value="src/main/resources/scripts-sql/create.sql" />
 <!-- 			<property -->
 <!-- 				name="javax.persistence.schema-generation.create-source" -->
-<!-- 				value="META-INF/create.sql" /> -->
+<!-- 				value="src/main/resources/scripts-sql/create.sql" /> -->
 <!-- 			<property -->
 <!-- 				name="javax.persistence.schema-generation.drop-source" -->
-<!-- 				value="META-INF/drop.sql" /> -->
+<!-- 				value="src/main/resources/scripts-sql/drop.sql" /> -->
 		</properties>
 	</persistence-unit>
 </persistence>
