@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -44,7 +45,7 @@ public abstract class CuentaBancaria {
 	private LocalDate fechaCierre;
 
 	@ManyToOne(optional = false)
-	// TODO: ¿como hago "updatable = false" en un @ManyToOne?
+	@JoinColumn(updatable = false)
 	@NotEmpty(message = "{common.generic.notEmpty}")
 	private Cliente titular;
 	@ManyToMany()

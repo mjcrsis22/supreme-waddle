@@ -15,19 +15,18 @@ import javax.validation.constraints.Positive;
 @Entity(name = "T_MOVIMIENTO")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Movimiento {
-	// TODO: Los datos de movimientos son inmutables y son todos obligatorios.
 	@Id
 	@GeneratedValue
 	private Long id;
-	@Column(nullable = false)
+	@Column(nullable = false, updatable = false)
 	@NotEmpty(message = "{common.generic.notEmpty}")
 	@PastOrPresent(message = "{common.generic.pastOrPresent}")
 	private LocalDateTime fechaHora;
-	@Column(nullable = false)
+	@Column(nullable = false, updatable = false)
 	@NotEmpty(message = "{common.generic.notEmpty}")
 	@Positive(message = "{common.generic.positive}")
 	private Double monto;
-	@Column(nullable = false)
+	@Column(nullable = false, updatable = false)
 	@NotEmpty(message = "{common.generic.notEmpty}")
 	private String descripcion;
 

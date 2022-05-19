@@ -10,11 +10,11 @@ import javax.validation.constraints.PositiveOrZero;
 
 @Entity(name = "T_MOVIMIENTO_VENTA_MONEDAEXTRANJERA")
 public class MovimientoVentaMonedaExtranjera extends Movimiento {
-	@Column(nullable = false)
+	@Column(nullable = false, updatable = false)
 	@NotEmpty(message = "{common.generic.notEmpty}")
 	@Positive(message = "{common.generic.positive}")
 	private Double cotizacion;
-	@Column(nullable = false)
+	@Column(nullable = false, updatable = false)
 	@NotEmpty(message = "{common.generic.notEmpty}")
 	@PositiveOrZero(message = "{common.generic.positiveOrZero}")
 	private Double comisionAplicada;

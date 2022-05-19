@@ -8,7 +8,7 @@ import javax.validation.constraints.NotEmpty;
 
 @Entity(name = "T_MOVIMIENTO_EXTRACCION")
 public class MovimientoExtraccion extends Movimiento {
-	@Column(nullable = false)
+	@Column(nullable = false, updatable = false)
 	@NotEmpty(message = "{common.generic.notEmpty}")
 	private String cajero;
 
