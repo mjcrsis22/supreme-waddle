@@ -5,5 +5,5 @@ import java.util.Collection;
 import app.models.CuentaBancaria;
 
 public interface CuentaBancariaDao extends BaseDao<CuentaBancaria> {
-	Collection<CuentaBancaria> findByCurrency();
+	Collection<CuentaBancaria> findByCurrency(String monedaAsociada);
 }

@@ -1,5 +1,5 @@
 package app.models;
 
-public enum MonedaExtranjera {
+public enum MonedaExtranjera implements Moneda {
 	USD, EUR;
 }

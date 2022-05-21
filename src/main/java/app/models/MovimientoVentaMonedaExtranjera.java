@@ -23,10 +23,6 @@ public class MovimientoVentaMonedaExtranjera extends Movimiento {
 		super();
 	}
 
-	public MovimientoVentaMonedaExtranjera(LocalDateTime fechaHora, Double monto, String descripcion) {
-		super(fechaHora, monto, descripcion);
-	}
-
 	public MovimientoVentaMonedaExtranjera(LocalDateTime fechaHora, Double monto, String descripcion, Double cotizacion,
 			Double comisionAplicada) {
 		super(fechaHora, monto, descripcion);

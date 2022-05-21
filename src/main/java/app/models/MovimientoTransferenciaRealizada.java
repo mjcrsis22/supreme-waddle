@@ -18,10 +18,6 @@ public class MovimientoTransferenciaRealizada extends Movimiento {
 		super();
 	}
 
-	public MovimientoTransferenciaRealizada(LocalDateTime fechaHora, Double monto, String descripcion) {
-		super(fechaHora, monto, descripcion);
-	}
-
 	public MovimientoTransferenciaRealizada(LocalDateTime fechaHora, Double monto, String descripcion,
 			CuentaBancaria cuentaDestino) {
 		super(fechaHora, monto, descripcion);

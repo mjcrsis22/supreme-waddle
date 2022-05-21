@@ -11,7 +11,7 @@ import app.daos.interfaces.CuentaBancariaDao;
 import app.models.CuentaBancaria;
 
 @NamedQuery(name = "findAllCuentasBancarias", query = "SELECT * FROM T_CUENTABANCARIA")
-@NamedQuery(name = "findByCurrencyCuentasBancarias", query = "SELECT * FROM T_CUENTABANCARIA")
+@NamedQuery(name = "findByCurrencyCuentasBancarias", query = "SELECT * FROM T_CUENTABANCARIA C LEFT JOIN T_CUENTABANCARIA_MONEDAEXTRANJERA E  ON  E.ID = C.ID WHERE E.MONEDAASOCIADA = :monedaAsociada")
 public class CuentaBancariaDaoImpl implements CuentaBancariaDao {
 
 	EntityManager em;
@@ -28,7 +28,7 @@ public class CuentaBancariaDaoImpl implements CuentaBancariaDao {
 
 	@Override
 	public Optional<CuentaBancaria> findById(Long id) {
-		return Optional.of(em.find(CuentaBancaria.class, id));
+		return Optional.ofNullable(em.find(CuentaBancaria.class, id));
 	}
 
 	@Override
@@ -48,8 +48,9 @@ public class CuentaBancariaDaoImpl implements CuentaBancariaDao {
 	}
 
 	@Override
-	public Collection<CuentaBancaria> findByCurrency() {
+	public Collection<CuentaBancaria> findByCurrency(String monedaAsociada) {
 		TypedQuery<CuentaBancaria> query = em.createNamedQuery("findByCurrencyCuentasBancarias", CuentaBancaria.class);
+		query.setParameter("monedaAsociada", monedaAsociada);
 		return query.getResultList();
 	}
 

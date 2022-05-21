@@ -25,7 +25,7 @@ public class MovimientoDaoImpl implements MovimientoDao {
 
 	@Override
 	public Optional<Movimiento> findById(Long id) {
-		return Optional.of(em.find(Movimiento.class, id));
+		return Optional.ofNullable(em.find(Movimiento.class, id));
 	}
 
 	@Override

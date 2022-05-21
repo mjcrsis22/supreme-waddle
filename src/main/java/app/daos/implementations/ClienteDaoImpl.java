@@ -28,7 +28,7 @@ public class ClienteDaoImpl implements ClienteDao {
 
 	@Override
 	public Optional<Cliente> findById(Long id) {
-		return Optional.of(em.find(Cliente.class, id));
+		return Optional.ofNullable(em.find(Cliente.class, id));
 	}
 
 	@Override

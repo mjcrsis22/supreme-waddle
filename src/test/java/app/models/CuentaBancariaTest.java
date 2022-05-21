@@ -24,7 +24,7 @@ public class CuentaBancariaTest {
 		String msg = "El constructor vacio no setea ningun atributo";
 		Object[] expected = { null, null, null, null, null, null, null };
 		Object[] actual = { sut.getNroCuenta(), sut.getFechaCreacion(), sut.getSaldoInicial(), sut.getSaldoActual(),
-				sut.getDescubiertoAcortado(), sut.getFechaCierre(), sut.getTitular() };
+				sut.getdescubiertoAcordado(), sut.getFechaCierre(), sut.getTitular() };
 		assertArrayEquals(msg, expected, actual);
 	}
 
@@ -36,20 +36,20 @@ public class CuentaBancariaTest {
 		LocalDate fechaCreacion = LocalDate.of(2010, 05, 13);
 		Double saldoInicial = 0.00;
 		Double saldoActual = 150000.84;
-		Double descubiertoAcortado = 0.00;
+		Double descubiertoAcordado = 0.00;
 		LocalDate fechaCierre = null;
 		Cliente titular = Mockito.mock(Cliente.class);
 
 		// when
-		sut = new CuentaBancariaMonedaNacional(nroCuenta, fechaCreacion, saldoInicial, saldoActual, descubiertoAcortado,
+		sut = new CuentaBancariaMonedaNacional(nroCuenta, fechaCreacion, saldoInicial, saldoActual, descubiertoAcordado,
 				fechaCierre, titular);
 
 		// then
 		String msg = "El constructor vacio no setea ningun atributo";
-		Object[] expected = { nroCuenta, fechaCreacion, saldoInicial, saldoActual, descubiertoAcortado, fechaCierre,
+		Object[] expected = { nroCuenta, fechaCreacion, saldoInicial, saldoActual, descubiertoAcordado, fechaCierre,
 				titular };
 		Object[] actual = { sut.getNroCuenta(), sut.getFechaCreacion(), sut.getSaldoInicial(), sut.getSaldoActual(),
-				sut.getDescubiertoAcortado(), sut.getFechaCierre(), sut.getTitular() };
+				sut.getdescubiertoAcordado(), sut.getFechaCierre(), sut.getTitular() };
 		assertArrayEquals(msg, expected, actual);
 	}
 
@@ -64,7 +64,7 @@ public class CuentaBancariaTest {
 		LocalDate fechaCreacion = LocalDate.of(2010, 05, 13);
 		Double saldoInicial = 0.00;
 		Double saldoActual = 150000.84;
-		Double descubiertoAcortado = 0.00;
+		Double descubiertoAcordado = 0.00;
 		LocalDate fechaCierre = null;
 		Cliente titular = Mockito.mock(Cliente.class);
 
@@ -77,15 +77,15 @@ public class CuentaBancariaTest {
 		movimientosRealizados.add(Mockito.mock(Movimiento.class));
 
 		// when
-		sut = new CuentaBancariaMonedaNacional(nroCuenta, fechaCreacion, saldoInicial, saldoActual, descubiertoAcortado,
+		sut = new CuentaBancariaMonedaNacional(nroCuenta, fechaCreacion, saldoInicial, saldoActual, descubiertoAcordado,
 				fechaCierre, titular, cotitulares, movimientosRealizados);
 
 		// then
 		String msg = "El constructor vacio no setea ningun atributo";
-		Object[] expected = { nroCuenta, fechaCreacion, saldoInicial, saldoActual, descubiertoAcortado, fechaCierre,
+		Object[] expected = { nroCuenta, fechaCreacion, saldoInicial, saldoActual, descubiertoAcordado, fechaCierre,
 				titular, cotitulares, movimientosRealizados };
 		Object[] actual = { sut.getNroCuenta(), sut.getFechaCreacion(), sut.getSaldoInicial(), sut.getSaldoActual(),
-				sut.getDescubiertoAcortado(), sut.getFechaCierre(), sut.getTitular(), sut.getCotitulares(),
+				sut.getdescubiertoAcordado(), sut.getFechaCierre(), sut.getTitular(), sut.getCotitulares(),
 				sut.getMovimientosRealizados() };
 		assertArrayEquals(msg, expected, actual);
 	}

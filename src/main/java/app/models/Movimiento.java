@@ -34,7 +34,6 @@ public abstract class Movimiento {
 	}
 
 	public Movimiento(LocalDateTime fechaHora, Double monto, String descripcion) {
-		super();
 		this.fechaHora = fechaHora;
 		this.monto = monto;
 		this.descripcion = descripcion;

@@ -16,10 +16,6 @@ public class MovimientoDeposito extends Movimiento {
 		super();
 	}
 
-	public MovimientoDeposito(LocalDateTime fechaHora, Double monto, String descripcion) {
-		super(fechaHora, monto, descripcion);
-	}
-
 	public MovimientoDeposito(LocalDateTime fechaHora, Double monto, String descripcion, String cajero) {
 		super(fechaHora, monto, descripcion);
 		this.cajero = cajero;

@@ -1,30 +1,31 @@
 package app.main;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import app.daos.implementations.ClienteDaoImpl;
-import app.models.Cliente;
-import app.models.Direccion;
+import app.services.interfaces.ServicioCuenta;
+import app.services.interfaces.ServicioTransferencia;
+
+// desde la ubicación del jar: /c/Users/A129057/Downloads/h2-2022-04-09/h2/bin
+// ejecutar: java -jar h2-2.1.212.jar
 
 public class UsaApp {
 	public static void main(String[] args) {
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("miniBankPU");
-		EntityManager em = emf.createEntityManager();
-		EntityTransaction tx = em.getTransaction();
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("spring/app-context.xml");
 
-		Direccion d = new Direccion("", "", "", "", "", "", "");
-		Cliente c = new Cliente("Danilo Jose", "Guerrero", d, "1123234545", "dguerrero@minibank.com");
+		ServicioCuenta servicioCuenta = ctx.getBean("servicioCuenta", ServicioCuenta.class);
+		ServicioTransferencia servicioTransferencia = ctx.getBean("servicioTransferencia", ServicioTransferencia.class);
 
-		ClienteDaoImpl clienteDao = new ClienteDaoImpl(em);
+		servicioCuenta.loadData();
 
-		tx.begin();
-		clienteDao.save(c);
-		tx.commit();
+		try {
+			//servicioCuenta.agregarCotitular(2L, 3L);
+			servicioTransferencia.realizarTransferencia(3L, 250.0, 4L);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		em.close();
-		emf.close();
+		((ConfigurableApplicationContext) ctx).close();
 	}
 }

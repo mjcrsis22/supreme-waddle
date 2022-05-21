@@ -16,10 +16,6 @@ public class MovimientoExtraccion extends Movimiento {
 		super();
 	}
 
-	public MovimientoExtraccion(LocalDateTime fechaHora, Double monto, String descripcion) {
-		super(fechaHora, monto, descripcion);
-	}
-
 	public MovimientoExtraccion(LocalDateTime fechaHora, Double monto, String descripcion, String cajero) {
 		super(fechaHora, monto, descripcion);
 		this.cajero = cajero;
