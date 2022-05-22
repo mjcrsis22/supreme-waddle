@@ -20,8 +20,6 @@ public class UsaApp {
 		ServicioMonedaExtranjera servicioMonedaExtranjera = ctx.getBean("servicioMonedaExtranjera",
 				ServicioMonedaExtranjera.class);
 
-		servicioCuenta.loadData();
-
 		try {
 			servicioCuenta.agregarCotitular(2L, 3L);
 			servicioTransferencia.realizarTransferencia(3L, 250.0, 4L);

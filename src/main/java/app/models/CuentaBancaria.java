@@ -230,7 +230,9 @@ public abstract class CuentaBancaria {
 	}
 
 	public void removeCotitularidad(Cliente cliente) {
-		// TODO: ??
+		// TODO: se debe validar si la cuenta se encuentra abierta?
+		// o si el cliente no figura como cotitular?
+		this.cotitulares.remove(cliente);
 	}
 
 	public void addMovimiento(Movimiento movimiento) throws Exception {

@@ -39,9 +39,10 @@
 				<prop
 					key="javax.persistence.schema-generation.scripts.create-target">db/scripts/create.sql</prop>
 
-				<!-- <prop key="javax.persistence.schema-generation.create-source">db/scripts/create.sql</prop> -->
-				<!-- <prop key="TODO: LOAD SQL">db/scripts/data.sql</prop> -->
-				<!-- <prop key="javax.persistence.schema-generation.drop-source">db/scripts/drop.sql</prop> -->
+				<prop key="javax.persistence.sql-load-script-source">db/scripts/data.sql</prop>
+
+				<!-- <prop key="javax.persistence.schema-generation.create-script-source">db/scripts/create.sql</prop> -->
+				<!-- <prop key="javax.persistence.schema-generation.drop-script-source">db/scripts/drop.sql</prop> -->
 			</props>
 		</property>
 	</bean>
