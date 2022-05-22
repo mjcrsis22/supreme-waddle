@@ -8,8 +8,10 @@ import app.daos.interfaces.ClienteDao;
 import app.daos.interfaces.CuentaBancariaDao;
 import app.models.Cliente;
 import app.models.CuentaBancaria;
+import app.models.CuentaBancariaMonedaExtranjera;
 import app.models.CuentaBancariaMonedaNacional;
 import app.models.Direccion;
+import app.models.MonedaExtranjera;
 import app.services.interfaces.ServicioCuenta;
 import lombok.AllArgsConstructor;
 
@@ -27,11 +29,14 @@ public class ServicioCuentaImpl implements ServicioCuenta {
 		Cliente c2 = new Cliente("Maria", "Guerrero", d, "1167678989", "mguerrero@minibank.com");
 		CuentaBancaria cb1 = new CuentaBancariaMonedaNacional(1L, LocalDate.now(), 0.0, 200.0, 100.0, null, c1);
 		CuentaBancaria cb2 = new CuentaBancariaMonedaNacional(2L, LocalDate.now(), 0.0, 0.0, 100.0, null, c2);
+		CuentaBancaria cb3 = new CuentaBancariaMonedaExtranjera(3L, LocalDate.now(), 100.0, 100.0, 50.0, null, c1,
+				MonedaExtranjera.USD);
 
 		clienteDao.save(c1);
 		clienteDao.save(c2);
 		cuentaBancariaDao.save(cb1);
 		cuentaBancariaDao.save(cb2);
+		cuentaBancariaDao.save(cb3);
 	}
 
 	@Override

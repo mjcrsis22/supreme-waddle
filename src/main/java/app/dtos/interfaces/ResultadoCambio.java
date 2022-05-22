@@ -4,11 +4,11 @@ public interface ResultadoCambio {
 	/**
 	 * @return Tasa aplicada al cambio
 	 */
-	public Long getTasa();
+	public Double getTasa();
 
 	/**
 	 * @return El resultado de la conversion
 	 */
-	public Long getResultado();
+	public Double getResultado();
 
 }

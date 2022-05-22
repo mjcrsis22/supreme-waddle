@@ -5,6 +5,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import app.services.interfaces.ServicioCuenta;
+import app.services.interfaces.ServicioMonedaExtranjera;
 import app.services.interfaces.ServicioTransferencia;
 
 // desde la ubicación del jar: /c/Users/A129057/Downloads/h2-2022-04-09/h2/bin
@@ -16,12 +17,15 @@ public class UsaApp {
 
 		ServicioCuenta servicioCuenta = ctx.getBean("servicioCuenta", ServicioCuenta.class);
 		ServicioTransferencia servicioTransferencia = ctx.getBean("servicioTransferencia", ServicioTransferencia.class);
+		ServicioMonedaExtranjera servicioMonedaExtranjera = ctx.getBean("servicioMonedaExtranjera",
+				ServicioMonedaExtranjera.class);
 
 		servicioCuenta.loadData();
 
 		try {
-			//servicioCuenta.agregarCotitular(2L, 3L);
+			servicioCuenta.agregarCotitular(2L, 3L);
 			servicioTransferencia.realizarTransferencia(3L, 250.0, 4L);
+			servicioMonedaExtranjera.VenderMonedaExtranjera(1L, 5L, 3L, 25.0);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

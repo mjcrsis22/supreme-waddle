@@ -95,5 +95,14 @@
 		<constructor-arg ref="cuentaBancariaDao"></constructor-arg>
 		<constructor-arg ref="movimientoDao"></constructor-arg>
 	</bean>
+	<bean id="servicioCambio"
+		class="app.services.implementations.ServicioCambioImpl" />
+	<bean id="servicioMonedaExtranjera"
+		class="app.services.implementations.ServicioMonedaExtranjeraImpl">
+		<constructor-arg ref="clienteDao"></constructor-arg>
+		<constructor-arg ref="cuentaBancariaDao"></constructor-arg>
+		<constructor-arg ref="movimientoDao"></constructor-arg>
+		<constructor-arg ref="servicioCambio"></constructor-arg>
+	</bean>
 
 </beans>

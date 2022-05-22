@@ -259,7 +259,7 @@ public abstract class CuentaBancaria {
 		this.saldoActual = this.saldoActual - monto;
 		cuentaDestino.setSaldoActual(cuentaDestino.getSaldoActual() + monto);
 
-		MovimientoTransferenciaRealizada mov1 = new MovimientoTransferenciaRealizada(LocalDateTime.now(), monto, "",
+		MovimientoTransferenciaRealizada mov1 = new MovimientoTransferenciaRealizada(LocalDateTime.now(), -monto, "",
 				this);
 		MovimientoTransferenciaRecibida mov2 = new MovimientoTransferenciaRecibida(LocalDateTime.now(), monto, "",
 				cuentaDestino);

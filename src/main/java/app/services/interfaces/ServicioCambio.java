@@ -1,7 +1,7 @@
 package app.services.interfaces;
 
 import app.dtos.interfaces.ResultadoCambio;
-import app.models.MonedaExtranjera;
+import app.models.Moneda;
 
 public interface ServicioCambio {
 	/**
@@ -13,5 +13,5 @@ public interface ServicioCambio {
 	 * @param monto a convertir
 	 * @return el resultado de la operación de cambio
 	 */
-	public ResultadoCambio cambiar(MonedaExtranjera de, MonedaExtranjera a, Long monto);
+	public ResultadoCambio cambiar(Moneda de, Moneda a, Double monto);
 }

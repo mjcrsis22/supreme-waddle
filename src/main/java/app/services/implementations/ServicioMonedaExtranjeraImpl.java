@@ -1,22 +1,32 @@
 package app.services.implementations;
 
+import java.time.LocalDateTime;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import app.daos.interfaces.ClienteDao;
 import app.daos.interfaces.CuentaBancariaDao;
+import app.daos.interfaces.MovimientoDao;
+import app.dtos.interfaces.ResultadoCambio;
 import app.models.Cliente;
 import app.models.CuentaBancaria;
+import app.models.MovimientoVentaMonedaExtranjera;
+import app.services.interfaces.ServicioCambio;
 import app.services.interfaces.ServicioMonedaExtranjera;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class ServicioMonedaExtranjeraImpl implements ServicioMonedaExtranjera {
 
 	ClienteDao clienteDao;
 	CuentaBancariaDao cuentaBancariaDao;
+	MovimientoDao movimientoDao;
+	ServicioCambio servicioCambio;
 
 	@Override
 	@Transactional
 	public void VenderMonedaExtranjera(Long idCliente, Long idCuentaMonedaExtranjera, Long idCuentaMonedaNacional,
-			Double monto) {
+			Double monto) throws Exception {
 		Cliente cliente = clienteDao.findById(idCliente).orElse(null);
 		CuentaBancaria cuentaMonedaExtranjera = cuentaBancariaDao.findById(idCuentaMonedaExtranjera).orElse(null);
 		CuentaBancaria cuentaMonedaNacional = cuentaBancariaDao.findById(idCuentaMonedaNacional).orElse(null);
@@ -30,9 +40,43 @@ public class ServicioMonedaExtranjeraImpl implements ServicioMonedaExtranjera {
 		if (cuentaMonedaNacional == null || !cuentaMonedaNacional.clienteEsTitularOCotitular(cliente)) {
 			throw new IllegalArgumentException("La cuenta en moneda nacional en referencia no existe.");
 		}
-		
-		// TODO: continuará...
 
+		// Las cuentas deben estar abiertas para realizar esta operación
+		if (cuentaMonedaExtranjera.getFechaCierre() != null) {
+			throw new Exception("La cuenta en moneda extranjera se encuentra cerrada.");
+		}
+		if (cuentaMonedaNacional.getFechaCierre() != null) {
+			throw new Exception("La cuenta en moneda nacional se encuentra cerrada.");
+		}
+
+		// El cambio solo se realiza entre cuentas con diferente moneda
+		if (cuentaMonedaExtranjera.getMoneda() == cuentaMonedaNacional.getMoneda()) {
+			throw new IllegalArgumentException("Las cuentas tienen la misma moneda.");
+		}
+
+		// La cuenta en moneda extranjera debe tener saldo suficiente
+		if (cuentaMonedaExtranjera.getSaldoActual() < monto) {
+			throw new Exception("Saldo insuficiente para realizar esta operacion.");
+		}
+
+		ResultadoCambio resultadoCambio = servicioCambio.cambiar(cuentaMonedaExtranjera.getMoneda(),
+				cuentaMonedaNacional.getMoneda(), monto);
+
+		cuentaMonedaExtranjera.setSaldoActual(cuentaMonedaExtranjera.getSaldoActual() - monto);
+		cuentaMonedaNacional.setSaldoActual(cuentaMonedaNacional.getSaldoActual() + resultadoCambio.getResultado());
+
+		MovimientoVentaMonedaExtranjera mov1 = new MovimientoVentaMonedaExtranjera(LocalDateTime.now(), -monto, "",
+				resultadoCambio.getTasa(), 0.00);
+		MovimientoVentaMonedaExtranjera mov2 = new MovimientoVentaMonedaExtranjera(LocalDateTime.now(),
+				resultadoCambio.getResultado(), "", resultadoCambio.getTasa(), 0.00);
+
+		cuentaMonedaExtranjera.addMovimiento(mov1);
+		cuentaMonedaNacional.addMovimiento(mov2);
+
+		movimientoDao.save(mov1);
+		movimientoDao.save(mov2);
+		cuentaBancariaDao.update(cuentaMonedaExtranjera);
+		cuentaBancariaDao.update(cuentaMonedaNacional);
 	}
 
 }
