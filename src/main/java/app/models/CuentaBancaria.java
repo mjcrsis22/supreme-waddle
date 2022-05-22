@@ -5,6 +5,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -19,6 +22,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.PastOrPresent;
 
 @Entity(name = "T_CUENTABANCARIA")
+@DiscriminatorColumn(name = "disc", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue(value = "CB")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class CuentaBancaria {
 	@Id

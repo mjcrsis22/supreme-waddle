@@ -2,12 +2,14 @@ package app.models;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
 
 @Entity(name = "T_MOVIMIENTO_TRANSFERENCIA_RECIBIDA")
+@DiscriminatorValue(value = "MOV_TR_RECIBIDA")
 public class MovimientoTransferenciaRecibida extends Movimiento {
 	@ManyToOne(optional = false)
 	@JoinColumn(updatable = false)

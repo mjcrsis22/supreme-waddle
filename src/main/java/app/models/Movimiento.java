@@ -3,6 +3,9 @@ package app.models;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,6 +16,8 @@ import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Positive;
 
 @Entity(name = "T_MOVIMIENTO")
+@DiscriminatorColumn(name = "disc", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue(value = "MOV")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Movimiento {
 	@Id

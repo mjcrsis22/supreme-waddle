@@ -3,10 +3,12 @@ package app.models;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotEmpty;
 
 @Entity(name = "T_MOVIMIENTO_EXTRACCION")
+@DiscriminatorValue(value = "MOV_EXTRACCION")
 public class MovimientoExtraccion extends Movimiento {
 	@Column(nullable = false, updatable = false)
 	@NotEmpty(message = "{common.generic.notEmpty}")

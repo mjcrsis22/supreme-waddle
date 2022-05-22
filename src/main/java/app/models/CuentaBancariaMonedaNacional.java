@@ -3,9 +3,11 @@ package app.models;
 import java.time.LocalDate;
 import java.util.Set;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity(name = "T_CUENTABANCARIA_MONEDANACIONAL")
+@DiscriminatorValue(value = "CB_MONEDANACIONAL")
 public class CuentaBancariaMonedaNacional extends CuentaBancaria {
 
 	public CuentaBancariaMonedaNacional() {

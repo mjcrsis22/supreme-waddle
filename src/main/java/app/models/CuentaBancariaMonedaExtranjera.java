@@ -5,10 +5,12 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotEmpty;
 
 @Entity(name = "T_CUENTABANCARIA_MONEDAEXTRANJERA")
+@DiscriminatorValue(value = "CB_MONEDAEXTRANJERA")
 public class CuentaBancariaMonedaExtranjera extends CuentaBancaria {
 	@Column(nullable = false)
 	@Convert(converter = MonedaExtranjeraConverter.class)
