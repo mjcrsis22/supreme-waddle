@@ -31,6 +31,7 @@ public class ServicioMonedaExtranjeraImpl implements ServicioMonedaExtranjera {
 		CuentaBancaria cuentaMonedaExtranjera = cuentaBancariaDao.findById(idCuentaMonedaExtranjera).orElse(null);
 		CuentaBancaria cuentaMonedaNacional = cuentaBancariaDao.findById(idCuentaMonedaNacional).orElse(null);
 
+		// Las entidades en referencia deben existir
 		if (cliente == null) {
 			throw new IllegalArgumentException("El cliente en referencia no existe.");
 		}
@@ -43,10 +44,10 @@ public class ServicioMonedaExtranjeraImpl implements ServicioMonedaExtranjera {
 
 		// Las cuentas deben estar abiertas para realizar esta operación
 		if (cuentaMonedaExtranjera.getFechaCierre() != null) {
-			throw new Exception("La cuenta en moneda extranjera se encuentra cerrada.");
+			throw new IllegalArgumentException("La cuenta en moneda extranjera se encuentra cerrada.");
 		}
 		if (cuentaMonedaNacional.getFechaCierre() != null) {
-			throw new Exception("La cuenta en moneda nacional se encuentra cerrada.");
+			throw new IllegalArgumentException("La cuenta en moneda nacional se encuentra cerrada.");
 		}
 
 		// El cambio solo se realiza entre cuentas con diferente moneda
@@ -62,13 +63,11 @@ public class ServicioMonedaExtranjeraImpl implements ServicioMonedaExtranjera {
 		ResultadoCambio resultadoCambio = servicioCambio.cambiar(cuentaMonedaExtranjera.getMoneda(),
 				cuentaMonedaNacional.getMoneda(), monto);
 
-		cuentaMonedaExtranjera.setSaldoActual(cuentaMonedaExtranjera.getSaldoActual() - monto);
-		cuentaMonedaNacional.setSaldoActual(cuentaMonedaNacional.getSaldoActual() + resultadoCambio.getResultado());
-
-		MovimientoVentaMonedaExtranjera mov1 = new MovimientoVentaMonedaExtranjera(LocalDateTime.now(), -monto, "",
-				resultadoCambio.getTasa(), 0.00);
+		MovimientoVentaMonedaExtranjera mov1 = new MovimientoVentaMonedaExtranjera(LocalDateTime.now(), monto,
+				"Debito en cuenta por venta de moneda extranjera.", resultadoCambio.getTasa(), 0.00);
 		MovimientoVentaMonedaExtranjera mov2 = new MovimientoVentaMonedaExtranjera(LocalDateTime.now(),
-				resultadoCambio.getResultado(), "", resultadoCambio.getTasa(), 0.00);
+				resultadoCambio.getResultado(), "Acreditación en cuenta por venta de moneda extranjera.",
+				resultadoCambio.getTasa(), 0.00);
 
 		cuentaMonedaExtranjera.addMovimiento(mov1);
 		cuentaMonedaNacional.addMovimiento(mov2);

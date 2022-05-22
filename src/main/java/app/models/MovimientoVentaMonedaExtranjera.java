@@ -46,4 +46,10 @@ public class MovimientoVentaMonedaExtranjera extends Movimiento {
 		this.comisionAplicada = comisionAplicada;
 	}
 
+	// TODO: Metodos especiales
+	@Override
+	public boolean ejecutar(CuentaBancaria cuentaBancaria) throws Exception {
+		return cuentaBancaria.aplicarMovimiento(this);
+	}
+
 }

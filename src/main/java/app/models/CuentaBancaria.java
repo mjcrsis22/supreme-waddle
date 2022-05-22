@@ -1,7 +1,6 @@
 package app.models;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,8 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.PastOrPresent;
-
-import app.dtos.implementations.ResultadoTransferenciaImpl;
 
 @Entity(name = "T_CUENTABANCARIA")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -231,43 +228,110 @@ public abstract class CuentaBancaria {
 		// TODO: ??
 	}
 
-	public void addMovimiento(Movimiento movimiento) {
-		this.movimientosRealizados.add(movimiento);
+	public void addMovimiento(Movimiento movimiento) throws Exception {
+		if (movimiento.ejecutar(this)) {
+			this.movimientosRealizados.add(movimiento);
+		}
 	}
 
-	public ResultadoTransferenciaImpl realizarTransferencia(Double monto, CuentaBancaria cuentaDestino)
-			throws Exception {
+	public boolean aplicarMovimiento(MovimientoCompraMonedaExtranjera movimiento) throws Exception {
 
-		// Las cuentas deben estar abiertas para realizar esta operación
-		if (this.fechaCierre != null) {
-			throw new Exception("La cuenta originante se encuentra cerrada.");
-		}
-		if (cuentaDestino.getFechaCierre() != null) {
-			throw new Exception("La cuenta destino se encuentra cerrada.");
+		// La cuenta debe estar abierta para realizar esta operación
+		if (this.getFechaCierre() != null) {
+			throw new Exception("La cuenta se encuentra cerrada.");
 		}
 
-		// Por el momento solo se puede transferir a cuentas con la misma moneda
-		if (this.getMoneda() != cuentaDestino.getMoneda()) {
-			throw new Exception("Por el momento solo se admiten transferencias entre cuentas con la misma moneda.");
+		if (this instanceof CuentaBancariaMonedaNacional) {
+			// La cuenta en moneda nacional debe tener saldo suficiente
+			if (this.getSaldoActual() < movimiento.getMonto()) {
+				throw new Exception("Saldo insuficiente para realizar esta operacion.");
+			}
+			this.saldoActual -= movimiento.getMonto();
+
+		} else {
+			this.saldoActual += movimiento.getMonto();
 		}
 
-		// La cuenta originante debe tener saldo suficiente
-		if ((this.saldoActual + this.descubiertoAcordado) < monto) {
+		return true;
+	}
+
+	public boolean aplicarMovimiento(MovimientoVentaMonedaExtranjera movimiento) throws Exception {
+
+		// La cuenta debe estar abierta para realizar esta operación
+		if (this.getFechaCierre() != null) {
+			throw new Exception("La cuenta se encuentra cerrada.");
+		}
+
+		if (this instanceof CuentaBancariaMonedaExtranjera) {
+			// La cuenta en moneda extranjera debe tener saldo suficiente
+			if (this.getSaldoActual() < movimiento.getMonto()) {
+				throw new Exception("Saldo insuficiente para realizar esta operacion.");
+			}
+			this.saldoActual -= movimiento.getMonto();
+
+		} else {
+			this.saldoActual += movimiento.getMonto();
+		}
+
+		return true;
+	}
+
+	public boolean aplicarMovimiento(MovimientoDeposito movimiento) throws Exception {
+
+		// La cuenta debe estar abierta para realizar esta operación
+		if (this.getFechaCierre() != null) {
+			throw new Exception("La cuenta se encuentra cerrada.");
+		}
+
+		this.saldoActual += movimiento.getMonto();
+
+		return true;
+	}
+
+	public boolean aplicarMovimiento(MovimientoExtraccion movimiento) throws Exception {
+
+		// La cuenta debe estar abierta para realizar esta operación
+		if (this.getFechaCierre() != null) {
+			throw new Exception("La cuenta se encuentra cerrada.");
+		}
+
+		// La cuenta debe tener saldo suficiente
+		if ((this.getSaldoActual() + this.getdescubiertoAcordado()) < movimiento.getMonto()) {
 			throw new Exception("Saldo insuficiente para realizar esta operacion.");
 		}
 
-		this.saldoActual = this.saldoActual - monto;
-		cuentaDestino.setSaldoActual(cuentaDestino.getSaldoActual() + monto);
+		this.saldoActual -= movimiento.getMonto();
 
-		MovimientoTransferenciaRealizada mov1 = new MovimientoTransferenciaRealizada(LocalDateTime.now(), -monto, "",
-				this);
-		MovimientoTransferenciaRecibida mov2 = new MovimientoTransferenciaRecibida(LocalDateTime.now(), monto, "",
-				cuentaDestino);
+		return true;
+	}
 
-		this.addMovimiento(mov1);
-		cuentaDestino.addMovimiento(mov2);
+	public boolean aplicarMovimiento(MovimientoTransferenciaRealizada movimiento) throws Exception {
 
-		return new ResultadoTransferenciaImpl(mov1, mov2);
+		// La cuenta debe estar abierta para realizar esta operación
+		if (this.getFechaCierre() != null) {
+			throw new Exception("La cuenta se encuentra cerrada.");
+		}
+
+		// La cuenta originante debe tener saldo suficiente
+		if ((this.getSaldoActual() + this.getdescubiertoAcordado()) < movimiento.getMonto()) {
+			throw new Exception("Saldo insuficiente para realizar esta operacion.");
+		}
+
+		this.saldoActual -= movimiento.getMonto();
+
+		return true;
+	}
+
+	public boolean aplicarMovimiento(MovimientoTransferenciaRecibida movimiento) throws Exception {
+
+		// La cuenta debe estar abierta para realizar esta operación
+		if (this.getFechaCierre() != null) {
+			throw new Exception("La cuenta se encuentra cerrada.");
+		}
+
+		this.saldoActual += movimiento.getMonto();
+
+		return true;
 	}
 
 }

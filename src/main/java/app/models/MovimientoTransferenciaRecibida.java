@@ -32,4 +32,10 @@ public class MovimientoTransferenciaRecibida extends Movimiento {
 		this.cuentaOrigen = cuentaOrigen;
 	}
 
+	// TODO: Metodos especiales
+	@Override
+	public boolean ejecutar(CuentaBancaria cuentaBancaria) throws Exception {
+		return cuentaBancaria.aplicarMovimiento(this);
+	}
+
 }

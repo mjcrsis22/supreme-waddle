@@ -71,4 +71,7 @@ public abstract class Movimiento {
 		this.descripcion = descripcion;
 	}
 
+	// TODO: Metodos especiales
+	public abstract boolean ejecutar(CuentaBancaria cuentaBancaria) throws Exception;
+
 }

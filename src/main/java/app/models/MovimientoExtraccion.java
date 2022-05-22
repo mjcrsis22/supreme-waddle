@@ -29,4 +29,10 @@ public class MovimientoExtraccion extends Movimiento {
 		this.cajero = cajero;
 	}
 
+	// TODO: Metodos especiales
+	@Override
+	public boolean ejecutar(CuentaBancaria cuentaBancaria) throws Exception {
+		return cuentaBancaria.aplicarMovimiento(this);
+	}
+
 }
