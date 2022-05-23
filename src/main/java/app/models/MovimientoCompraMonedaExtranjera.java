@@ -3,12 +3,14 @@ package app.models;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
 @Entity(name = "T_MOVIMIENTO_COMPRA_MONEDAEXTRANJERA")
+@DiscriminatorValue(value = "MOV_COMPRA_MO")
 public class MovimientoCompraMonedaExtranjera extends Movimiento {
 	@Column(nullable = false, updatable = false)
 	@NotEmpty(message = "{common.generic.notEmpty}")
@@ -21,10 +23,6 @@ public class MovimientoCompraMonedaExtranjera extends Movimiento {
 
 	public MovimientoCompraMonedaExtranjera() {
 		super();
-	}
-
-	public MovimientoCompraMonedaExtranjera(LocalDateTime fechaHora, Double monto, String descripcion) {
-		super(fechaHora, monto, descripcion);
 	}
 
 	public MovimientoCompraMonedaExtranjera(LocalDateTime fechaHora, Double monto, String descripcion,
@@ -48,6 +46,12 @@ public class MovimientoCompraMonedaExtranjera extends Movimiento {
 
 	public void setComisionAplicada(Double comisionAplicada) {
 		this.comisionAplicada = comisionAplicada;
+	}
+
+	// TODO: Metodos especial
+	@Override
+	public boolean ejecutar(CuentaBancaria cuentaBancaria) throws Exception {
+		return cuentaBancaria.aplicarMovimiento(this);
 	}
 
 }
