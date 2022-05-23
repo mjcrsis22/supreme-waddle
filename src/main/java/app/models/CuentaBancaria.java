@@ -241,47 +241,9 @@ public abstract class CuentaBancaria {
 		}
 	}
 
-	public boolean aplicarMovimiento(MovimientoCompraMonedaExtranjera movimiento) throws Exception {
+	public abstract boolean aplicarMovimiento(MovimientoCompraMonedaExtranjera movimiento) throws Exception;
 
-		// La cuenta debe estar abierta para realizar esta operación
-		if (this.getFechaCierre() != null) {
-			throw new Exception("La cuenta se encuentra cerrada.");
-		}
-
-		if (this instanceof CuentaBancariaMonedaNacional) {
-			// La cuenta en moneda nacional debe tener saldo suficiente
-			if (this.getSaldoActual() < movimiento.getMonto()) {
-				throw new Exception("Saldo insuficiente para realizar esta operacion.");
-			}
-			this.saldoActual -= movimiento.getMonto();
-
-		} else {
-			this.saldoActual += movimiento.getMonto();
-		}
-
-		return true;
-	}
-
-	public boolean aplicarMovimiento(MovimientoVentaMonedaExtranjera movimiento) throws Exception {
-
-		// La cuenta debe estar abierta para realizar esta operación
-		if (this.getFechaCierre() != null) {
-			throw new Exception("La cuenta se encuentra cerrada.");
-		}
-
-		if (this instanceof CuentaBancariaMonedaExtranjera) {
-			// La cuenta en moneda extranjera debe tener saldo suficiente
-			if (this.getSaldoActual() < movimiento.getMonto()) {
-				throw new Exception("Saldo insuficiente para realizar esta operacion.");
-			}
-			this.saldoActual -= movimiento.getMonto();
-
-		} else {
-			this.saldoActual += movimiento.getMonto();
-		}
-
-		return true;
-	}
+	public abstract boolean aplicarMovimiento(MovimientoVentaMonedaExtranjera movimiento) throws Exception;
 
 	public boolean aplicarMovimiento(MovimientoDeposito movimiento) throws Exception {
 

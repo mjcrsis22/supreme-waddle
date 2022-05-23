@@ -62,4 +62,33 @@ public class CuentaBancariaMonedaExtranjera extends CuentaBancaria {
 		return monedaAsociada;
 	}
 
+	@Override
+	public boolean aplicarMovimiento(MovimientoCompraMonedaExtranjera movimiento) throws Exception {
+
+		// La cuenta debe estar abierta para realizar esta operación
+		if (this.getFechaCierre() != null) {
+			throw new Exception("La cuenta se encuentra cerrada.");
+		}
+
+		this.setSaldoActual(this.getSaldoActual() + movimiento.getMonto());
+		return true;
+	}
+
+	@Override
+	public boolean aplicarMovimiento(MovimientoVentaMonedaExtranjera movimiento) throws Exception {
+
+		// La cuenta debe estar abierta para realizar esta operación
+		if (this.getFechaCierre() != null) {
+			throw new Exception("La cuenta se encuentra cerrada.");
+		}
+
+		// La cuenta en moneda extranjera debe tener saldo suficiente
+		if (this.getSaldoActual() < movimiento.getMonto()) {
+			throw new Exception("Saldo insuficiente para realizar esta operacion.");
+		}
+
+		this.setSaldoActual(this.getSaldoActual() - movimiento.getMonto());
+		return true;
+	}
+
 }
