@@ -10,6 +10,7 @@ import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -17,33 +18,35 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 
 @Entity(name = "T_CUENTABANCARIA")
 @DiscriminatorColumn(name = "disc", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue(value = "CB")
 @Inheritance(strategy = InheritanceType.JOINED)
+@NamedQuery(name = "cuentabancaria.findAll", query = "SELECT CB FROM T_CUENTABANCARIA CB")
 public abstract class CuentaBancaria {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(nullable = false, updatable = false, unique = true)
-	@NotEmpty(message = "{common.generic.notEmpty}")
+	@NotNull(message = "{common.generic.notEmpty}")
 	private Long nroCuenta;
 	@Column(nullable = false, updatable = false)
-	@NotEmpty(message = "{common.generic.notEmpty}")
+	@NotNull(message = "{common.generic.notEmpty}")
 	@PastOrPresent(message = "{common.generic.pastOrPresent}")
 	private LocalDate fechaCreacion;
 	@Column(nullable = false, updatable = false)
-	@NotEmpty(message = "{common.generic.notEmpty}")
+	@NotNull(message = "{common.generic.notEmpty}")
 	private Double saldoInicial;
 	@Column(nullable = false)
-	@NotEmpty(message = "{common.generic.notEmpty}")
+	@NotNull(message = "{common.generic.notEmpty}")
 	private Double saldoActual;
 	@Column(nullable = false)
-	@NotEmpty(message = "{common.generic.notEmpty}")
+	@NotNull(message = "{common.generic.notEmpty}")
 	private Double descubiertoAcordado;
 	@Column()
 	@PastOrPresent(message = "{common.generic.pastOrPresent}")
@@ -51,7 +54,7 @@ public abstract class CuentaBancaria {
 
 	@ManyToOne(optional = false)
 	@JoinColumn(updatable = false)
-	@NotEmpty(message = "{common.generic.notEmpty}")
+	@NotNull(message = "{common.generic.notEmpty}")
 	private Cliente titular;
 	@ManyToMany()
 	@JoinTable(name = "T_CUENTABANCARIA_R_COTITULAR")

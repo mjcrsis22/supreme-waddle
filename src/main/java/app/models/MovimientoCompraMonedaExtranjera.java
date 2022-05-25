@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
@@ -13,11 +13,11 @@ import javax.validation.constraints.PositiveOrZero;
 @DiscriminatorValue(value = "MOV_COMPRA_MO")
 public class MovimientoCompraMonedaExtranjera extends Movimiento {
 	@Column(nullable = false, updatable = false)
-	@NotEmpty(message = "{common.generic.notEmpty}")
+	@NotNull(message = "{common.generic.notEmpty}")
 	@Positive(message = "{common.generic.positive}")
 	private Double cotizacion;
 	@Column(nullable = false, updatable = false)
-	@NotEmpty(message = "{common.generic.notEmpty}")
+	@NotNull(message = "{common.generic.notEmpty}")
 	@PositiveOrZero(message = "{common.generic.positiveOrZero}")
 	private Double comisionAplicada;
 

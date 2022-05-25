@@ -4,14 +4,11 @@ import java.util.Collection;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NamedQuery;
 import javax.persistence.TypedQuery;
 
 import app.daos.interfaces.CuentaBancariaDao;
 import app.models.CuentaBancaria;
 
-@NamedQuery(name = "findAllCuentasBancarias", query = "SELECT * FROM T_CUENTABANCARIA")
-@NamedQuery(name = "findByCurrencyCuentasBancarias", query = "SELECT * FROM T_CUENTABANCARIA C LEFT JOIN T_CUENTABANCARIA_MONEDAEXTRANJERA E  ON  E.ID = C.ID WHERE E.MONEDAASOCIADA = :monedaAsociada")
 public class CuentaBancariaDaoImpl implements CuentaBancariaDao {
 
 	EntityManager em;
@@ -33,7 +30,7 @@ public class CuentaBancariaDaoImpl implements CuentaBancariaDao {
 
 	@Override
 	public Collection<CuentaBancaria> findAll() {
-		TypedQuery<CuentaBancaria> query = em.createNamedQuery("findAllCuentasBancarias", CuentaBancaria.class);
+		TypedQuery<CuentaBancaria> query = em.createNamedQuery("cuentabancaria.findAll", CuentaBancaria.class);
 		return query.getResultList();
 	}
 
@@ -49,7 +46,7 @@ public class CuentaBancariaDaoImpl implements CuentaBancariaDao {
 
 	@Override
 	public Collection<CuentaBancaria> findByCurrency(String monedaAsociada) {
-		TypedQuery<CuentaBancaria> query = em.createNamedQuery("findByCurrencyCuentasBancarias", CuentaBancaria.class);
+		TypedQuery<CuentaBancaria> query = em.createNamedQuery("cuentabancaria.findByCurrency", CuentaBancaria.class);
 		query.setParameter("monedaAsociada", monedaAsociada);
 		return query.getResultList();
 	}

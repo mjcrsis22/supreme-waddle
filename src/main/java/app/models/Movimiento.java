@@ -8,10 +8,12 @@ import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Positive;
 
@@ -21,14 +23,14 @@ import javax.validation.constraints.Positive;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Movimiento {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(nullable = false, updatable = false)
-	@NotEmpty(message = "{common.generic.notEmpty}")
+	@NotNull(message = "{common.generic.notEmpty}")
 	@PastOrPresent(message = "{common.generic.pastOrPresent}")
 	private LocalDateTime fechaHora;
 	@Column(nullable = false, updatable = false)
-	@NotEmpty(message = "{common.generic.notEmpty}")
+	@NotNull(message = "{common.generic.notEmpty}")
 	@Positive(message = "{common.generic.positive}")
 	private Double monto;
 	@Column(nullable = false, updatable = false)

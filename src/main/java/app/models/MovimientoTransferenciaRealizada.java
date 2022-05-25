@@ -6,14 +6,14 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity(name = "T_MOVIMIENTO_TRANSFERENCIA_REALIZADA")
 @DiscriminatorValue(value = "MOV_TR_REALIZADA")
 public class MovimientoTransferenciaRealizada extends Movimiento {
 	@ManyToOne(optional = false)
 	@JoinColumn(updatable = false)
-	@NotEmpty(message = "{common.generic.notEmpty}")
+	@NotNull(message = "{common.generic.notEmpty}")
 	private CuentaBancaria cuentaDestino;
 
 	public MovimientoTransferenciaRealizada() {

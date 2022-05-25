@@ -4,14 +4,11 @@ import java.util.Collection;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NamedQuery;
 import javax.persistence.TypedQuery;
 
 import app.daos.interfaces.ClienteDao;
 import app.models.Cliente;
 
-@NamedQuery(name = "findAllClientes", query = "SELECT * FROM T_CLIENTE")
-@NamedQuery(name = "findByNameClientes", query = "SELECT * FROM T_CLIENTE WHERE NOMBRE LIKE :nombreCliente")
 public class ClienteDaoImpl implements ClienteDao {
 
 	EntityManager em;
@@ -33,7 +30,7 @@ public class ClienteDaoImpl implements ClienteDao {
 
 	@Override
 	public Collection<Cliente> findAll() {
-		TypedQuery<Cliente> query = em.createNamedQuery("findAllClientes", Cliente.class);
+		TypedQuery<Cliente> query = em.createNamedQuery("cliente.findAll", Cliente.class);
 		return query.getResultList();
 	}
 
@@ -49,7 +46,7 @@ public class ClienteDaoImpl implements ClienteDao {
 
 	@Override
 	public Collection<Cliente> findByName(String nombreCliente) {
-		TypedQuery<Cliente> query = em.createNamedQuery("findByNameClientes", Cliente.class);
+		TypedQuery<Cliente> query = em.createNamedQuery("cliente.findByName", Cliente.class);
 		query.setParameter("nombreCliente", nombreCliente);
 		return query.getResultList();
 	}
