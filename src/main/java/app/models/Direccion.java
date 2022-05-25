@@ -34,7 +34,7 @@ public class Direccion {
 	@Column(nullable = false, length = 50)
 	@NotEmpty(message = "{common.generic.notEmpty}")
 	@Size(min = 2, max = 50, message = "{common.generic.size}")
-	private String Provincia;
+	private String provincia;
 
 	public Direccion() {
 	}
@@ -48,7 +48,7 @@ public class Direccion {
 		this.piso = piso;
 		this.ciudad = ciudad;
 		this.codigoPostal = codigoPostal;
-		Provincia = provincia;
+		this.provincia = provincia;
 	}
 
 	public String getCalle() {
@@ -100,11 +100,11 @@ public class Direccion {
 	}
 
 	public String getProvincia() {
-		return Provincia;
+		return provincia;
 	}
 
 	public void setProvincia(String provincia) {
-		Provincia = provincia;
+		this.provincia = provincia;
 	}
 
 }

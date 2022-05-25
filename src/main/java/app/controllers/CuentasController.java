@@ -23,9 +23,6 @@ import app.services.interfaces.ServicioTransferencia;
 @RestController
 @RequestMapping("/cuentas")
 public class CuentasController {
-	// TODO: Cuentas: Mostrar todas las cuentas, crear una nueva cuenta, agregar un
-	// cliente como cotitular de una cuenta, realizar una transferencia a una cuenta
-	// del mismo banco.
 
 	@Autowired
 	ServicioCuenta servicioCuenta;

@@ -14,11 +14,14 @@ import app.models.CuentaBancariaMonedaNacional;
 import app.models.MonedaExtranjera;
 import app.services.interfaces.ServicioCuenta;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 
 @AllArgsConstructor
 public class ServicioCuentaImpl implements ServicioCuenta {
 
+	@NonNull
 	ClienteDao clienteDao;
+	@NonNull
 	CuentaBancariaDao cuentaBancariaDao;
 
 	@Override

@@ -88,6 +88,10 @@
 			</bean>
 		</constructor-arg>
 	</bean>
+	<bean id="servicioCliente"
+		class="app.services.implementations.ServicioClienteImpl">
+		<constructor-arg ref="clienteDao"></constructor-arg>
+	</bean>
 	<bean id="servicioCuenta"
 		class="app.services.implementations.ServicioCuentaImpl">
 		<constructor-arg ref="clienteDao"></constructor-arg>
