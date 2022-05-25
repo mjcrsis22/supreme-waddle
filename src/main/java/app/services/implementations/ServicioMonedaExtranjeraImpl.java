@@ -74,8 +74,6 @@ public class ServicioMonedaExtranjeraImpl implements ServicioMonedaExtranjera {
 
 		movimientoDao.save(mov1);
 		movimientoDao.save(mov2);
-		cuentaBancariaDao.update(cuentaMonedaExtranjera);
-		cuentaBancariaDao.update(cuentaMonedaNacional);
 	}
 
 }

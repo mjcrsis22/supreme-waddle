@@ -60,8 +60,6 @@ public class ServicioTransferenciaImpl implements ServicioTransferencia {
 
 		movimientoDao.save(mov1);
 		movimientoDao.save(mov2);
-		cuentaBancariaDao.update(cuentaOriginante);
-		cuentaBancariaDao.update(cuentaDestino);
 	}
 
 }
