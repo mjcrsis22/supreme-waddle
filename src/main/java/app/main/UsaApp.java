@@ -8,9 +8,6 @@ import app.services.interfaces.ServicioCuenta;
 import app.services.interfaces.ServicioMonedaExtranjera;
 import app.services.interfaces.ServicioTransferencia;
 
-// desde la ubicación del jar: /c/Users/A129057/Downloads/h2-2022-04-09/h2/bin
-// ejecutar: java -jar h2-2.1.212.jar
-
 public class UsaApp {
 	public static void main(String[] args) {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("spring/app-context.xml");
@@ -23,7 +20,7 @@ public class UsaApp {
 		try {
 			servicioCuenta.agregarCotitular(2L, 3L);
 			servicioTransferencia.realizarTransferencia(3L, 250.0, 4L);
-			servicioMonedaExtranjera.VenderMonedaExtranjera(1L, 5L, 3L, 25.0);
+			servicioMonedaExtranjera.venderMonedaExtranjera(1L, 5L, 3L, 25.0);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

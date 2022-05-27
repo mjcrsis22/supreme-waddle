@@ -15,7 +15,7 @@
         http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
 	<context:property-placeholder
-		location="db/jdbc.properties" />
+		location="properties/jdbc.properties" />
 
 	<bean id="baseDeDatos"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
@@ -36,15 +36,15 @@
 				<prop key="javax.persistence.schema-generation.database.action">drop-and-create</prop>
 
 				<!-- <prop key="javax.persistence.schema-generation.scripts.action">drop-and-create</prop> 
-					<prop key="javax.persistence.schema-generation.scripts.create-target">src/main/resources/db/scripts/create.sql</prop> 
-					<prop key="javax.persistence.schema-generation.scripts.drop-target">src/main/resources/db/scripts/drop.sql</prop> -->
+					<prop key="javax.persistence.schema-generation.scripts.create-target">src/main/resources/db-scripts/create.sql</prop> 
+					<prop key="javax.persistence.schema-generation.scripts.drop-target">src/main/resources/db-scripts/drop.sql</prop> -->
 
-				<prop key="javax.persistence.sql-load-script-source">db/scripts/data.sql</prop>
+				<prop key="javax.persistence.sql-load-script-source">db-scripts/data.sql</prop>
 
 				<prop
-					key="javax.persistence.schema-generation.create-script-source">db/scripts/create.sql</prop>
+					key="javax.persistence.schema-generation.create-script-source">db-scripts/create.sql</prop>
 				<prop
-					key="javax.persistence.schema-generation.drop-script-source">db/scripts/drop.sql</prop>
+					key="javax.persistence.schema-generation.drop-script-source">db-scripts/drop.sql</prop>
 			</props>
 		</property>
 	</bean>
