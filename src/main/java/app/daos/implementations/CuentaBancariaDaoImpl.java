@@ -1,7 +1,6 @@
 package app.daos.implementations;
 
 import java.util.Collection;
-import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -9,39 +8,25 @@ import javax.persistence.TypedQuery;
 import app.daos.interfaces.CuentaBancariaDao;
 import app.models.CuentaBancaria;
 
-public class CuentaBancariaDaoImpl implements CuentaBancariaDao {
-
-	EntityManager em;
+public class CuentaBancariaDaoImpl extends BaseDaoImpl<CuentaBancaria> implements CuentaBancariaDao {
 
 	public CuentaBancariaDaoImpl(EntityManager em) {
-		this.em = em;
+		super(em);
 	}
 
 	@Override
-	public boolean save(CuentaBancaria cuentaBancaria) {
-		em.persist(cuentaBancaria);
+	protected Class<CuentaBancaria> getTypeClass() {
+		return CuentaBancaria.class;
+	}
+
+	@Override
+	protected boolean isCreated(CuentaBancaria cuentaBancaria) {
 		return cuentaBancaria.getId() != null;
 	}
 
 	@Override
-	public Optional<CuentaBancaria> findById(Long id) {
-		return Optional.ofNullable(em.find(CuentaBancaria.class, id));
-	}
-
-	@Override
-	public Collection<CuentaBancaria> findAll() {
-		TypedQuery<CuentaBancaria> query = em.createNamedQuery("cuentabancaria.findAll", CuentaBancaria.class);
-		return query.getResultList();
-	}
-
-	@Override
-	public void delete(CuentaBancaria cuentaBancaria) {
-		em.remove(cuentaBancaria);
-	}
-
-	@Override
-	public void update(CuentaBancaria cuentaBancaria) {
-		em.merge(cuentaBancaria);
+	protected String getFindAllNamedQuery() {
+		return "cuentabancaria.findAll";
 	}
 
 	@Override
