@@ -1,6 +1,6 @@
 package app.services.interfaces;
 
 public interface ServicioMonedaExtranjera {
-	public void VenderMonedaExtranjera(Long idCliente, Long idCuentaMonedaExtranjera, Long idCuentaMonedaNacional,
+	public void venderMonedaExtranjera(Long idCliente, Long idCuentaMonedaExtranjera, Long idCuentaMonedaNacional,
 			Double monto) throws Exception;
 }

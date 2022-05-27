@@ -15,9 +15,11 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import app.dtos.implementations.RequestCuentaCrear;
 import app.dtos.implementations.RequestCuentaTransferirMismoBanco;
+import app.dtos.implementations.RequestCuentaVenderMonedaExtranjera;
 import app.dtos.implementations.RequestCuentaVincular;
 import app.models.CuentaBancaria;
 import app.services.interfaces.ServicioCuenta;
+import app.services.interfaces.ServicioMonedaExtranjera;
 import app.services.interfaces.ServicioTransferencia;
 
 @RestController
@@ -28,6 +30,8 @@ public class CuentasController {
 	ServicioCuenta servicioCuenta;
 	@Autowired
 	ServicioTransferencia servicioTransferencia;
+	@Autowired
+	ServicioMonedaExtranjera servicioMonedaExtranjera;
 
 	@GetMapping("/listar")
 	public List<CuentaBancaria> listar() {
@@ -69,6 +73,21 @@ public class CuentasController {
 		try {
 			servicioTransferencia.realizarTransferencia(requestCuentaTransferir.getIdCuentaOriginante(),
 					requestCuentaTransferir.getMonto(), requestCuentaTransferir.getIdCuentaDestino());
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, e.getMessage());
+		}
+	}
+
+	@PostMapping("/venderMonedaExtranjera")
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public void venderMonedaExtranjera(
+			@RequestBody RequestCuentaVenderMonedaExtranjera requestCuentaVenderMonedaExtranjera) {
+		try {
+			servicioMonedaExtranjera.venderMonedaExtranjera(requestCuentaVenderMonedaExtranjera.getIdCliente(),
+					requestCuentaVenderMonedaExtranjera.getIdCuentaMonedaExtranjera(),
+					requestCuentaVenderMonedaExtranjera.getIdCuentaMonedaNacional(),
+					requestCuentaVenderMonedaExtranjera.getMonto());
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, e.getMessage());

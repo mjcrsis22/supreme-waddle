@@ -25,7 +25,7 @@ public class ServicioMonedaExtranjeraImpl implements ServicioMonedaExtranjera {
 
 	@Override
 	@Transactional
-	public void VenderMonedaExtranjera(Long idCliente, Long idCuentaMonedaExtranjera, Long idCuentaMonedaNacional,
+	public void venderMonedaExtranjera(Long idCliente, Long idCuentaMonedaExtranjera, Long idCuentaMonedaNacional,
 			Double monto) throws Exception {
 		Cliente cliente = clienteDao.findById(idCliente).orElse(null);
 		CuentaBancaria cuentaMonedaExtranjera = cuentaBancariaDao.findById(idCuentaMonedaExtranjera).orElse(null);
