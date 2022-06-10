@@ -12,7 +12,8 @@ buildNumber.properties
 
 # Eclipse m2e generated files
 # Eclipse Core
+.settings/
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
-/.factorypath
+.factorypath
