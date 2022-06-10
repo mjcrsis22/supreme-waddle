@@ -23,7 +23,7 @@ public class MovimientoDaoImpl extends BaseDaoImpl<Movimiento> implements Movimi
 
 	@Override
 	protected String getFindAllNamedQuery() {
-		return "findAllMovimientos";
+		return Movimiento.findAllNamedQuery;
 	}
 
 }

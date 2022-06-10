@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
@@ -21,7 +22,11 @@ import javax.validation.constraints.Positive;
 @DiscriminatorColumn(name = "disc", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue(value = "MOV")
 @Inheritance(strategy = InheritanceType.JOINED)
+@NamedQuery(name = Movimiento.findAllNamedQuery, query = "SELECT M FROM T_MOVIMIENTO M")
 public abstract class Movimiento {
+
+	public static final String findAllNamedQuery = "findAllMovimientos";
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

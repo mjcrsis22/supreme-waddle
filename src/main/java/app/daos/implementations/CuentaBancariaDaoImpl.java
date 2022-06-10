@@ -26,12 +26,13 @@ public class CuentaBancariaDaoImpl extends BaseDaoImpl<CuentaBancaria> implement
 
 	@Override
 	protected String getFindAllNamedQuery() {
-		return "cuentabancaria.findAll";
+		return CuentaBancaria.findAllNamedQuery;
 	}
 
 	@Override
 	public Collection<CuentaBancaria> findByCurrency(String monedaAsociada) {
-		TypedQuery<CuentaBancaria> query = em.createNamedQuery("cuentabancaria.findByCurrency", CuentaBancaria.class);
+		TypedQuery<CuentaBancaria> query = em.createNamedQuery(CuentaBancaria.findByCurrencyNamedQuery,
+				CuentaBancaria.class);
 		query.setParameter("monedaAsociada", monedaAsociada);
 		return query.getResultList();
 	}

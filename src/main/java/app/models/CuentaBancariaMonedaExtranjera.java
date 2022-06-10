@@ -7,12 +7,10 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 
 @Entity(name = "T_CUENTABANCARIA_MONEDAEXTRANJERA")
 @DiscriminatorValue(value = "CB_MONEDAEXTRANJERA")
-@NamedQuery(name = "cuentabancaria.findByCurrency", query = "SELECT CB FROM T_CUENTABANCARIA CB LEFT JOIN T_CUENTABANCARIA_MONEDAEXTRANJERA CBE  ON  CBE.id = CB.id WHERE CBE.monedaAsociada = :monedaAsociada")
 public class CuentaBancariaMonedaExtranjera extends CuentaBancaria {
 	@Column(nullable = false)
 	@Convert(converter = MonedaExtranjeraConverter.class)

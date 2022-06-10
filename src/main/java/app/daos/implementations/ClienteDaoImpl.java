@@ -26,12 +26,12 @@ public class ClienteDaoImpl extends BaseDaoImpl<Cliente> implements ClienteDao {
 
 	@Override
 	protected String getFindAllNamedQuery() {
-		return "cliente.findAll";
+		return Cliente.findAllNamedQuery;
 	}
 
 	@Override
 	public Collection<Cliente> findByName(String nombreCliente) {
-		TypedQuery<Cliente> query = em.createNamedQuery("cliente.findByName", Cliente.class);
+		TypedQuery<Cliente> query = em.createNamedQuery(Cliente.findByNameNamedQuery, Cliente.class);
 		query.setParameter("nombreCliente", nombreCliente);
 		return query.getResultList();
 	}

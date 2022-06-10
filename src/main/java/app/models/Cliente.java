@@ -17,14 +17,27 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-// TODO: agregar documentacion con autor
-// TODO: revisar uso de lombok
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+/**
+ * La clase Cliente representa y maneja los metodos asociados a un cliente del
+ * minibanco.
+ * 
+ * Serán relacionados como titulares o cotitulares de las
+ * {@link app.models.CuentaBancaria}.
+ * 
+ * @author Marcos Colina
+ */
 @Entity(name = "T_CLIENTE")
-@NamedQueries({
-	@NamedQuery(name = "cliente.findAll", query = "SELECT C FROM T_CLIENTE C"),
-	@NamedQuery(name = "cliente.findByName", query = "SELECT C FROM T_CLIENTE C WHERE C.nombre LIKE :nombreCliente")
-})
+@NamedQueries({ @NamedQuery(name = Cliente.findAllNamedQuery, query = "SELECT C FROM T_CLIENTE C"),
+		@NamedQuery(name = Cliente.findByNameNamedQuery, query = "SELECT C FROM T_CLIENTE C WHERE C.nombre LIKE :nombreCliente") })
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Cliente {
+
+	public static final String findAllNamedQuery = "cliente.findAll";
+	public static final String findByNameNamedQuery = "cliente.findByName";
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -45,11 +58,23 @@ public class Cliente {
 	@Email(message = "{common.generic.email}")
 	private String email;
 
-	// TODO: se debe definir y documentar en que capa se controlará el enunciado:
-	// "Un cliente titular no debe figurar como cotitular de una misma
-	// CuentaBancaria"
+	/**
+	 * Lista de {@link app.models.CuentaBancaria} a las que el
+	 * {@link app.models.Cliente} se relaciona como titular.
+	 * 
+	 * Un cliente no debe relacionarse a una misma cuenta como titular y cotitular,
+	 * esto será controlado por el modelo {@link app.models.CuentaBancaria}.
+	 */
 	@OneToMany(mappedBy = "titular")
 	private Set<CuentaBancaria> cuentasTitular = new HashSet<CuentaBancaria>();
+
+	/**
+	 * Lista de {@link app.models.CuentaBancaria} a las que el
+	 * {@link app.models.Cliente} se relaciona como cotitular.
+	 * 
+	 * Un cliente no debe relacionarse a una misma cuenta como titular y cotitular,
+	 * esto será controlado por el modelo {@link app.models.CuentaBancaria}.
+	 */
 	@ManyToMany(mappedBy = "cotitulares")
 	private Set<CuentaBancaria> cuentasCotitular = new HashSet<CuentaBancaria>();
 

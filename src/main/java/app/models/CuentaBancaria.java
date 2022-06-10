@@ -18,17 +18,36 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+/**
+ * La clase CuentaBancaria representa y maneja los metodos asociados a una
+ * cuenta del minibanco.
+ * 
+ * Estará relacionado a los {@link app.models.Cliente}, pudiendo ser el titular
+ * de la cuenta o uno de sus cotitulares.
+ * 
+ * @author Marcos Colina
+ */
 @Entity(name = "T_CUENTABANCARIA")
 @DiscriminatorColumn(name = "disc", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue(value = "CB")
 @Inheritance(strategy = InheritanceType.JOINED)
-@NamedQuery(name = "cuentabancaria.findAll", query = "SELECT CB FROM T_CUENTABANCARIA CB")
+@NamedQueries({ @NamedQuery(name = CuentaBancaria.findAllNamedQuery, query = "SELECT CB FROM T_CUENTABANCARIA CB"),
+		@NamedQuery(name = CuentaBancaria.findByCurrencyNamedQuery, query = "SELECT CB FROM T_CUENTABANCARIA CB LEFT JOIN T_CUENTABANCARIA_MONEDAEXTRANJERA CBE  ON  CBE.id = CB.id WHERE CBE.monedaAsociada = :monedaAsociada") })
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public abstract class CuentaBancaria {
+
+	public static final String findAllNamedQuery = "cuentabancaria.findAll";
+	public static final String findByCurrencyNamedQuery = "cuentabancaria.findByCurrency";
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -233,8 +252,6 @@ public abstract class CuentaBancaria {
 	}
 
 	public void removeCotitularidad(Cliente cliente) {
-		// TODO: se debe validar si la cuenta se encuentra abierta?
-		// o si el cliente no figura como cotitular?
 		this.cotitulares.remove(cliente);
 	}
 
